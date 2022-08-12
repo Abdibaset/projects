@@ -48,43 +48,49 @@ int main(void) {
          1, 2, 3);
 
   do { // check for whether the value is in the valid range.
-    scanf("%d", &entry);
-		scanf("%c", &jnk);
-    if (entry < 1 || entry > 3) {
-      printf("Invalid option, try again!\n");
-    }
-    else if(entry == 1){
-			prevGame = fopen("TicTacToeSave.txt", "r");
-			if (prevGame == NULL){
-			 	printf("There isn't previous game, start a name game.\n");
-     		newGame(arr);
-			}
-			else{
-				printf("There is a saved game, would like to continue?\nEnter\n(1)To load game.\n(2)To start a name game.\n");
-				scanf("%d", &gametype);
-				scanf("%c", &jnk);
-				if(gametype == 1){
-					readGame(arr);
-				}
-				else if(gametype == 2){
-					printf("Player A --(X), Player B--(O)\n");
-  				printf("+---+---+---+\t\t+---+---+---+\n");
- 	 				printf("| 1 | 2 | 3 |\t\t| %c | %c | %c |\n", arr[0], arr[1], arr[2]);
- 				  printf("+---+---+---+\t\t+---+---+---+\n");
- 				  printf("| 4 | 5 | 6 |\t\t| %c | %c | %c |\n", arr[3], arr[4], arr[5]);
- 				  printf("+---+---+---+\t\t+---+---+---+\n");
- 				  printf("| 7 | 8 | 9 |\t\t| %c | %c | %c |\n", arr[6], arr[7], arr[8]);
-  			  printf("+---+---+---+\t\t+---+---+---+\n");
-					newGame(arr);
-				}
-			}
-    }
-    else if(entry == 2){
-      readGame(arr);
-    }
-		else if(entry == 3){
-			playComputer(arr);
-		}
+	  scanf("%d", &entry);
+	  scanf("%c", &jnk);
+	  if (entry < 1 || entry > 3) {
+		  printf("Invalid option, try again!\n");
+	  }
+	  
+	  else if(entry == 1){
+		  prevGame = fopen("TicTacToeSave.txt", "r");
+		  if (prevGame == NULL){
+			  printf("There isn't previous game, start a name game.\n");
+			  newGame(arr);
+		  }
+		  
+		  else{
+			  printf("There is a saved game, would like to continue?\nEnter\n(1)To load game.\n(2)To start a name game.\n");
+			  scanf("%d", &gametype);
+			  scanf("%c", &jnk);
+			  
+			  if(gametype == 1){
+				  readGame(arr);
+			  }
+		    
+			  else if(gametype == 2){
+				  printf("Player A --(X), Player B--(O)\n");
+				  printf("+---+---+---+\t\t+---+---+---+\n");
+				  printf("| 1 | 2 | 3 |\t\t| %c | %c | %c |\n", arr[0], arr[1], arr[2]);
+				  printf("+---+---+---+\t\t+---+---+---+\n");
+				  printf("| 4 | 5 | 6 |\t\t| %c | %c | %c |\n", arr[3], arr[4], arr[5]);
+				  printf("+---+---+---+\t\t+---+---+---+\n");
+				  printf("| 7 | 8 | 9 |\t\t| %c | %c | %c |\n", arr[6], arr[7], arr[8]);
+				  printf("+---+---+---+\t\t+---+---+---+\n");
+				  newGame(arr);
+			  }
+		  }
+	  }
+	  //options for selecting previous game
+	  else if(entry == 2){
+		  readGame(arr);
+	  }
+	  //options for playing against computer
+	  else if(entry == 3){
+		  playComputer(arr);
+	  }
   } while (entry < 1 || entry > 3);
   
 
@@ -95,10 +101,10 @@ int main(void) {
 
 /*gametype func: new game/previous game/play against computer*/
 void newGame(char arr[]) {
-  int i, position, quit_save, win, emptySpace; // variable i for counter, position-stores user entry when asked
-  char player, junk;
+	int i, position, quit_save, win, emptySpace; // variable i for counter, position-stores user entry when asked
+	char player, junk;
 	
-    for(i = 0; i < 9; i++) {         // counter upto 9 because board 9 spots
+	for(i = 0; i < 9; i++) {         // counter upto 9 because board 9 spots
       if (i % 2 == 0) { // for odd numbers of i, player A plays
         player = 'A';
       }
