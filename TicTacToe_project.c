@@ -68,13 +68,13 @@ int main(void) {
 				}
 				else if(gametype == 2){
 					printf("Player A --(X), Player B--(O)\n");
-  				printf("+---+---+---+\t\t+---+---+---+\n");
+  					printf("+---+---+---+\t\t+---+---+---+\n");
  	 				printf("| 1 | 2 | 3 |\t\t| %c | %c | %c |\n", arr[0], arr[1], arr[2]);
- 				  printf("+---+---+---+\t\t+---+---+---+\n");
- 				  printf("| 4 | 5 | 6 |\t\t| %c | %c | %c |\n", arr[3], arr[4], arr[5]);
- 				  printf("+---+---+---+\t\t+---+---+---+\n");
- 				  printf("| 7 | 8 | 9 |\t\t| %c | %c | %c |\n", arr[6], arr[7], arr[8]);
-  			  printf("+---+---+---+\t\t+---+---+---+\n");
+ 				  	printf("+---+---+---+\t\t+---+---+---+\n");
+ 				  	printf("| 4 | 5 | 6 |\t\t| %c | %c | %c |\n", arr[3], arr[4], arr[5]);
+ 				  	printf("+---+---+---+\t\t+---+---+---+\n");
+ 				  	printf("| 7 | 8 | 9 |\t\t| %c | %c | %c |\n", arr[6], arr[7], arr[8]);
+  			  		printf("+---+---+---+\t\t+---+---+---+\n");
 					newGame(arr);
 				}
 			}
@@ -82,9 +82,10 @@ int main(void) {
     else if(entry == 2){
       readGame(arr);
     }
-		else if(entry == 3){
-			playComputer(arr);
-		}
+	
+	else if(entry == 3){
+		playComputer(arr);
+	}
   } while (entry < 1 || entry > 3);
   
 
@@ -109,7 +110,7 @@ void newGame(char arr[]) {
       do { // checks whether the user entered a value range 1-9
 				printf("Player %c, enter position or 0 to quit:", player);
         scanf("%d", &position);
-				scanf("%c", &junk);
+		scanf("%c", &junk);
         if (position < 0 || position > 9) {
           printf("Invalid Option. Try again!\n");
         }
@@ -133,17 +134,19 @@ void newGame(char arr[]) {
       else {
         clearBoard(position, player, arr); // call for function for board if move is legal
       
-				}
-      win = gameWon(position, arr, player);
+	   }
+      
+	  win = gameWon(position, arr, player);
       if (win == 1) {
         printf("Player %c wins", player);
         i = 10;
       }
+		
       else if (win == 2){
         printf("Game ends in a draw!");
         i = 10;
       }
-		}
+	}
     
   }
 
@@ -201,11 +204,9 @@ int gameWon(int pos, char arr[], char player){
   if (arr[0] == arr[1] && arr[1] == arr[2] && arr[0] != ' ') {
     return 1;
   }
-
   else if (arr[3] == arr[4] && arr[4] == arr[5] && arr[3] != ' ') {
     return 1;
   }
-
   else if (arr[6] == arr[7] && arr[7] == arr[8] && arr[6] != ' ') {
     return 1;
   }
@@ -213,20 +214,16 @@ int gameWon(int pos, char arr[], char player){
   else if (arr[0] == arr[4] && arr[4] == arr[8] && arr[0] != ' ') {
     return 1;
   }
-
   else if (arr[2] == arr[4] && arr[4] == arr[6] && arr[2] != ' ') {
     return 1;
   }
-
   /*vertical match along the vertical of the columns of the grid*/
   else if (arr[0] == arr[3] && arr[3] == arr[6] && arr[0] != ' ') {
     return 1;
   }
-
   else if (arr[1] == arr[4] && arr[4] == arr[7] && arr[1] != ' ') {
     return 1;
   }
-
   else if (arr[2] == arr[5] && arr[5] == arr[8] && arr[5] != ' ') {
     return 1;
   }
@@ -246,12 +243,12 @@ void writeGame(char player, char arr[]){
   int counter = 0; // m is for the counter below
 
   save_game = fopen("TicTacToeSave.txt", "w");
+	
   while (counter < 9) {
     fprintf(save_game, "%c,", arr[counter]); // writing the positions entered by the player
     counter++;
-		}
+  }
   fclose(save_game);
-
   save_game = fopen("TicTacToeSave.txt", "a"); // appending the player at the end of 9 values in the array
   fprintf(save_game, "%c", player);
   fclose(save_game);
@@ -275,14 +272,14 @@ void readGame(char arr[]){
       fscanf(previous_game, "%c,", &arr[m]); // scanning the content of the file and
         if (arr[m] == ' '){
          i++; //empty spaces
-        }
-      }
+       }
+    }
       else {
         fscanf(previous_game, "%c", &player);
       } 
     }
 		
-		displayPrevGame(arr, player, i);
+	displayPrevGame(arr, player, i);
     Previous_Game(i, arr, player);
   }
 	fclose(previous_game);
@@ -308,25 +305,27 @@ void Previous_Game(int i, char arr[], char player) {
 	
   for(n = 0; n < i; n++) {         // counter upto 9 because board 9 spots
     if (n % 2 == 0) { // for odd numbers of i, player A plays
-      player = 'A';
+    	player = 'A';
     }
     else if (n %2 != 0){ /// for even numbers of i, player A plays
-       player = 'B';
+    	player = 'B';
     }
 			
     do { // checks whether the user entered a value range 1-9
-			printf("Player %c, enter position or 0 to quit:", player);
+	  printf("Player %c, enter position or 0 to quit:", player);
       scanf("%d", &position);
-			scanf("%c", &jnk);
+	  scanf("%c", &jnk);
+		
       if (position < 0 || position > 9) {
         printf("Invalid Option. Try again!\n");
       }
+		
       else if (position == 0) { // save game 
         n = i;
         printf("Enter %d(yes) to save game or %d(no) to delete:", 1, 2);
         scanf("%d", &quit_save);
         if(quit_save == 1){
-					writeGame(player, arr);
+			writeGame(player, arr);
         }
       }
     } while (position < 0 || position > 9);
@@ -351,7 +350,7 @@ void Previous_Game(int i, char arr[], char player) {
       printf("Game ends in a draw!");
       n = i;
     }
-	}
+  }
   
 }
 
@@ -363,18 +362,19 @@ void playComputer(char arr[]) {
   printf("You--(X), Computer--(O)\n");
 
   for (i = 0; i < 9; i++) { // counter upto 9 because board 9 spots
-		if (i % 2 != 0) {
+	if (i % 2 != 0) {
     	player = 'A';
-		}
-		else if (i % 2 == 0) { // computer starts the game to have a better chance of winning
-			player = 'B';
-		}
+	}
+	else if (i % 2 == 0) { // computer starts the game to have a better chance of winning
+		player = 'B';
+	}
 
-		if(player == 'A'){
+	if(player == 'A'){
       do { // checks whether the user entered a value range 1-9
-				printf("Enter position or 0 to quit:");
+		printf("Enter position or 0 to quit:");
         scanf("%d", &position);
-				scanf("%c", &jnk);
+		scanf("%c", &jnk);
+		  
         if (position < 0 || position > 9) {
           printf("Invalid Option. Try again!\n");
         }
@@ -383,130 +383,131 @@ void playComputer(char arr[]) {
           printf("Enter %d(yes) to save game or %d(no) to delete:", 1, 2);
           scanf("%d", &quit_save);
           if(quit_save == 1){
-						writeGame(player, arr);
-        	}
+			  writeGame(player, arr);
+          }
         }
       } while (position < 0 || position > 9);
 
- 		}
+ 	}
 
-		else if (player == 'B'){
+	else if (player == 'B'){
       /*if the players intends to get a horizontal match on row 1*/
       if ((arr[0] == 'X' && arr[1] == 'X' && arr[2] == ' ') ||(arr[0] == 'O' && arr[1] == 'O' && arr[2] == ' ')) {
-        position = 3;
+        	position = 3;
       } 
-			else if ((arr[0] == 'X' && arr[1] == ' ' && arr[2] == 'X') || (arr[0] == 'X' && arr[1] == ' ' && arr[2] == 'X')){
-        position = 2;
+		else if ((arr[0] == 'X' && arr[1] == ' ' && arr[2] == 'X') || (arr[0] == 'X' && arr[1] == ' ' && arr[2] == 'X')){
+        	position = 2;
       } else if ((arr[0] == ' ' && arr[1] == 'X' && arr[2] == 'X') || (arr[0] == ' ' && arr[1] == 'O' && arr[2] == 'O')) {
-        position = 1;
+        	position = 1;
       }
       /*if the players intends to get a horizontal match on row 2*/
-      else if ((arr[3] == 'X' && arr[4] == 'X' && arr[5] == ' ') || (arr[3] == 'O' && arr[4] == 'O' && arr[5] == ' ')) {
+        else if ((arr[3] == 'X' && arr[4] == 'X' && arr[5] == ' ') || (arr[3] == 'O' && arr[4] == 'O' && arr[5] == ' ')) {
         position = 6;
       } else if ((arr[3] == 'X' && arr[4] == ' ' && arr[5] == 'X') || (arr[3] == 'O' && arr[4] == ' ' && arr[5] == 'O')){
-        position = 5;
+        	position = 5;
 				
       }		
-			else if ((arr[3] == ' ' && arr[4] == 'X' && arr[5] == 'X') ||(arr[3] == ' ' && arr[4] == 'O' && arr[5] == 'O')){
-        position = 4;
+		else if ((arr[3] == ' ' && arr[4] == 'X' && arr[5] == 'X') ||(arr[3] == ' ' && arr[4] == 'O' && arr[5] == 'O')){
+        	position = 4;
       }
       /*if the players intends to get a horizontal match on row 3*/
       else if ((arr[6] == 'X' && arr[7] == 'X' && arr[8] == ' ') || (arr[6] == 'O' && arr[7] == 'O' && arr[8] == ' ')){
-        position = 9;
+      		position = 9;
       } else if ((arr[6] == 'X' && arr[7] == ' ' && arr[8] == 'X') || (arr[6] == 'O' && arr[7] == ' ' && arr[8] == 'O')){
-        position = 8;
+        	position = 8;
       } else if ((arr[6] == ' ' && arr[7] == 'X' && arr[8] == 'X')|| (arr[6] == ' ' && arr[7] == 'O' && arr[8] == 'O')){
-        position = 7;
+        	position = 7;
       }
 
       /*if the players intends to get vertical match*/
       else if ((arr[0] == ' ' && arr[3] == 'X' && arr[6] == 'X') || (arr[0] == ' ' && arr[3] == 'O' && arr[6] == 'O')){
-        position = 1;
+        	position = 1;
       } 
-			else if ((arr[0] == 'X' && arr[3] == 'X' && arr[6] == ' ') || (arr[0] == 'O' && arr[3] == 'O' && arr[6] == ' ')) {
-        position = 7;
+	  else if ((arr[0] == 'X' && arr[3] == 'X' && arr[6] == ' ') || (arr[0] == 'O' && arr[3] == 'O' && arr[6] == ' ')) {
+      		position = 7;
 
       } 
-			else if ((arr[0] == 'X' && arr[3] == ' ' && arr[6] == 'X') || (arr[0] == 'O' && arr[3] == ' ' && arr[6] == 'O')) {
-        position = 4;
+	  else if ((arr[0] == 'X' && arr[3] == ' ' && arr[6] == 'X') || (arr[0] == 'O' && arr[3] == ' ' && arr[6] == 'O')) {
+        	position = 4;
       } 
-			else if ((arr[1] == ' ' && arr[4] == 'X' && arr[7] == 'X') || (arr[1] == ' ' && arr[4] == 'O' && arr[7] == 'O')) {
-        position = 2;
+	  else if ((arr[1] == ' ' && arr[4] == 'X' && arr[7] == 'X') || (arr[1] == ' ' && arr[4] == 'O' && arr[7] == 'O')) {
+      		position = 2;
       } 
-			else if ((arr[1] == 'X' && arr[4] == ' ' && arr[7] == 'X') || (arr[1] == 'O' && arr[4] == ' ' && arr[7] == 'O')) {
-        position = 5;
+	  else if ((arr[1] == 'X' && arr[4] == ' ' && arr[7] == 'X') || (arr[1] == 'O' && arr[4] == ' ' && arr[7] == 'O')) {
+     		position = 5;
       } 
-			else if ((arr[1] == 'X' && arr[4] == 'X' && arr[7] == ' ')|| (arr[1] == 'O' && arr[4] == 'O' && arr[7] == ' ')) {
-        position = 8;
+	  else if ((arr[1] == 'X' && arr[4] == 'X' && arr[7] == ' ')|| (arr[1] == 'O' && arr[4] == 'O' && arr[7] == ' ')) {
+       		position = 8;
       } else if ((arr[2] == ' ' && arr[5] == 'X' && arr[8] == 'X') || (arr[2] == ' ' && arr[5] == 'O' && arr[8] == 'O')) {
-        position = 3;
+        	position = 3;
       } else if ((arr[2] == 'X' && arr[5] == 'X' && arr[8] == ' ') || (arr[2] == 'O' && arr[5] == 'O' && arr[8] == ' ')){
-        position = 9;
+        	position = 9;
       } else if ((arr[2] == 'X' && arr[5] == ' ' && arr[8] == 'X') || (arr[2] == 'O' && arr[5] == ' ' && arr[8] == 'O')) {
-        position = 6;
+        	position = 6;
       }
       /*if the players intends to apply X along the diagonals*/
       else if ((arr[0] == 'X' && arr[4] == 'X' && arr[8] == ' ') || (arr[0] == 'O' && arr[4] == 'O' && arr[8] == ' ')) {
-        position = 9;
+        	position = 9;
       } else if ((arr[0] == ' ' && arr[4] == 'X' && arr[8] == 'X') || (arr[0] == ' ' && arr[4] == 'O' && arr[8] == 'O')) {
-        position = 1;
+        	position = 1;
       } else if ((arr[0] == 'X' && arr[4] == ' ' && arr[8] == 'X') || (arr[0] == 'O' && arr[4] == ' ' && arr[8] == 'O')) {
-        position = 5;
+        	position = 5;
       } 
-			else if (arr[0] == 'X' || arr[8] == 'X' || arr[2] == 'X' || arr[6] == 'X') {
-        position = 5;
-			}
-			else if ((arr[2] == 'X' && arr[4] == 'X' && arr[6] == ' ') || (arr[2] == 'O' && arr[4] == 'O' && arr[6] == ' ')) {
-        position = 7;
+		else if (arr[0] == 'X' || arr[8] == 'X' || arr[2] == 'X' || arr[6] == 'X') {
+        	position = 5;
+		}
+		else if ((arr[2] == 'X' && arr[4] == 'X' && arr[6] == ' ') || (arr[2] == 'O' && arr[4] == 'O' && arr[6] == ' ')) {
+        	position = 7;
       } else if ((arr[2] == 'X' && arr[4] == ' ' && arr[6] == 'X') || (arr[2] == 'O' && arr[4] == ' ' && arr[6] == 'O')) {
-        position = 5;
+        	position = 5;
       } else if ((arr[2] == ' ' && arr[4] == 'X' && arr[6] == 'X') || (arr[2] == ' ' && arr[4] == 'O' && arr[6] == 'O')){
-        position = 3;
+        	position = 3;
       }
 
       else if(arr[0] == ' ' || arr[1] == ' ' || arr[2] == ' ' || arr[3] == ' ' ||
-           arr[4] == ' ' || arr[5] == ' ' || arr[6] == ' ' || arr[7] == ' ' ||
-           arr[8] == ' '){ // if none of the scenarios above occur, generate a random number
-        srand(time(NULL)); // this function refreshes the random number every second
-        position = (rand() % (9 - 1 + 1)) + 1; // the format is (rand() %(upper_bound-lower_bound+1))+1. random numbers range 1-9
+      		arr[4] == ' ' || arr[5] == ' ' || arr[6] == ' ' || arr[7] == ' ' ||
+           	arr[8] == ' '){ // if none of the scenarios above occur, generate a random number
+       		srand(time(NULL)); // this function refreshes the random number every second
+        	position = (rand() % (9 - 1 + 1)) + 1; // the format is (rand() %(upper_bound-lower_bound+1))+1. random numbers range 1-9
 				//position = rand() % 10;
-      }
-		}
+      	}
+	}
 			 
-			emptySpace = legalMove(position, arr); // call for function to check whether the position chosen is occupied
+	emptySpace = legalMove(position, arr); // call for function to check whether the position chosen is occupied
 
       /*next step if the move is illegal*/
-      if (emptySpace != 1) {
-				if (player == 'A'){
-					printf("Invalid Option. Try again!\n");
+    if (emptySpace != 1) {
+		if (player == 'A'){
+			printf("Invalid Option. Try again!\n");
         	i -= 1; // the counter is set backwards so the loop is repeated
      	 }
-			  else if (player == 'B'){
-					 i -= 1; // the counter is set backwards so the loop is repeated
-				}
-			}
-      else {
-        clearBoard(position, player, arr); // call for function for board if move is legal
-      
-				}
-      win = gameWon(position, arr, player);
-      if (win == 1) {
-				i = 10;
-				if(player == 'A'){
-					printf("You won!\n");
-				}
-				else {
-        printf("You LOST!\n");	
+		
+		else if (player == 'B'){
+			i -= 1; // the counter is set backwards so the loop is repeated
+			}		
+	}
+    else {
+    	clearBoard(position, player, arr); // call for function for board if move is legal
+	}
+    
+	win = gameWon(position, arr, player);
+    if (win == 1) {
+		i = 10;
+		if(player == 'A'){
+			printf("You won!\n");
+		}
+		else {
+        	printf("You LOST!\n");	
       	}
-			}	
-      else if (win == 2){
-        printf("Game ends in a draw!");
+	}	
+    else if (win == 2){
+    	printf("Game ends in a draw!");
         i = 10;
-      }
     }
+   }
 
 		
-	}
+}
 
 /*color functions with their parameters*/
 void red() { 
