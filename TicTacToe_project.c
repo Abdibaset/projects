@@ -2,7 +2,7 @@
 #include <stdlib.h> //library for random function(srand)
 #include <time.h>   //library for refreshing variables
 
-/*prototypes*/
+/*prototypes*/  
 void newGame(char arr[]);
 void clearBoard(int pos, char player, char arr[]);
 void displaylBoard(int pos, char player, char arr[]);
