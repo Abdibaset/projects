@@ -37,7 +37,6 @@ int main(void) {
     reset();
     printf("| %c | %c | %c |\n", array[6], array[7], array[8]);
     printf("+---+---+---+\n");
-
     violet();
 
     // accessing the user input
@@ -48,20 +47,12 @@ int main(void) {
     } while (userEntry > 3 || userEntry < 1);
 
     printf("Success, the game has began ...\n");
-
     // calling the functions - PlayGame, Previous_Game, playAgainstComputer
-    if(userEntry == 1){
-        PlayGame(pos_arr, 0);
-    } 
-    else if(userEntry == 2){
-        Previous_Game(pos_arr);
-    }
-    
-    else if(userEntry == 3){
-        playAgainstComputer(pos_arr);
-    }
+    if(userEntry == 1){ PlayGame(pos_arr, 0);} 
+    else if(userEntry == 2){ Previous_Game(pos_arr); }
+    else if(userEntry == 3){ playAgainstComputer(pos_arr);}
   
-  exit(EXIT_SUCCESS);
+    exit(EXIT_SUCCESS);
 }
 
 /**
@@ -89,12 +80,10 @@ int userinput(void){
  * 
 */
 bool legalMove(int pos, char pos_arr[]) {
-
   if (pos_arr[pos - 1] == 'X' || pos_arr[pos - 1] == 'O') {
     return false; // the position is occupied, the return value resets i counter backwards by one value
   }
   return true; // if the position is not occupied it return 0, and the i counter
- 
 }
 
 /**
@@ -108,13 +97,11 @@ void writeGame(char player, char pos_arr[]){
   int counter = 0; // m is for the counter below
 
   save_game = fopen("GameHistory.txt", "w");
-	
   while (counter < 9) {
     fprintf(save_game, "%c", pos_arr[counter]); // writing the positions entered by the player
     counter++;
   }
   fclose(save_game);
-  
 }
 
 /**
@@ -124,7 +111,6 @@ void writeGame(char player, char pos_arr[]){
  * @return 1 if the game is won, 2 if drawn, 0 otherwise
 */
 int gameWon(int pos, char pos_arr[]){
-
   /*horizontal match along the different rows*/
   if (pos_arr[0] == pos_arr[1] && pos_arr[1] == pos_arr[2] && pos_arr[0] != ' ') {
     return 1;
@@ -158,7 +144,6 @@ int gameWon(int pos, char pos_arr[]){
            pos_arr[8] != ' ') {
     return 2;
   }
-
   return 0; // if none of these options exists, returns -2 for the game to continue.
 }
 
@@ -174,7 +159,6 @@ void addMove(int pos, char player, char pos_arr[]) {
 
   if (player == 'A') { mark = 'X';}
   else { mark = 'O';}
-
   pos_arr[pos - 1] = mark; // depending on the if statement above, the empty is
                        // assigned a given mark.
 }
@@ -185,14 +169,14 @@ void addMove(int pos, char player, char pos_arr[]) {
  * 
 */
 void displayBoard(char pos_arr[]) {
-  red();
 
+  red();
   /*the pos_arrays hold positions*/
   printf("\n Tic-Tac-Toe\n\n");
   reset();
-
   printf("Player A --(X), Player B--(O)\n");
   red();
+
   printf("+---+---+---+\t\t+---+---+---+\n");
   printf("| 1 | 2 | 3 |\t\t| %c | %c | %c |\n", pos_arr[0], pos_arr[1], pos_arr[2]);
   printf("+---+---+---+\t\t+---+---+---+\n");
@@ -200,8 +184,6 @@ void displayBoard(char pos_arr[]) {
   printf("+---+---+---+\t\t+---+---+---+\n");
   printf("| 7 | 8 | 9 |\t\t| %c | %c | %c |\n", pos_arr[6], pos_arr[7], pos_arr[8]);
   printf("+---+---+---+\t\t+---+---+---+\n");
-
-	
 }
 
 /**
@@ -244,15 +226,12 @@ void PlayGame(char pos_arr[], int numMoves) {
             printf("Invalid Option. Try again!\n");
             i -= 1;
         }
-
-        
         displayBoard(pos_arr); // call for function for board if move is legal
 
         if (gameWon(position, pos_arr) == 1) {
             printf("Player %c wins", player);
             exit(EXIT_SUCCESS);
-        }
-            
+        }     
         else if (gameWon(position, pos_arr) == 2){
             printf("Game ends in a draw!");
             exit(EXIT_SUCCESS);   
@@ -270,20 +249,20 @@ void Previous_Game(char pos_arr[]){
   FILE *prevGame;
   char move;
   int pos = 0, numMoves = 0;
+
   //open and read file
   prevGame = fopen("GameHistory.txt", "r");
-
   if (prevGame == NULL){ 
     printf("There is no data to display\n");
     PlayGame(pos_arr, numMoves);
   }
-
   else{
     while((move = fgetc(prevGame)) != EOF){
       pos_arr[pos] = move;
       if (move != ' '){ numMoves++;}
       pos++;
     } 
+
     displayBoard(pos_arr);
     PlayGame(pos_arr,numMoves);
   }
@@ -301,22 +280,19 @@ void playAgainstComputer(char pos_arr[]) {
   char player;
 
   printf("Your Move --(X), Computer's Move --(O)\n");
-
   for (int i = 0; i < 9; i++) { // counter upto 9 because board 9 spots
 	  if (i % 2 != 0) {
       player = 'A';
 		  printf("\nEnter position or 0 to quit "); 	
       do { 
           printf("Player %c ->", player); 
-          position = userinput();
-          
+          position = userinput();       
       }while (position > 9 || position < 0); 
 
       if (position == 0) { // save game 
          printf("You lost!\n");
         exit(EXIT_SUCCESS);
       }
-
  	}
 
 	else{
@@ -393,7 +369,6 @@ void playAgainstComputer(char pos_arr[]) {
       } else if ((pos_arr[2] == ' ' && pos_arr[4] == 'X' && pos_arr[6] == 'X') || (pos_arr[2] == ' ' && pos_arr[4] == 'O' && pos_arr[6] == 'O')){
         	position = 3;
       }
-
       else { // if none of the scenarios above occur, generate a random number
        		srand(time(NULL)); // this function refreshes the random number every second
         	position = (rand()%9) + 1;
@@ -410,11 +385,7 @@ void playAgainstComputer(char pos_arr[]) {
     else{
       if(player == 'A') { printf("Invalid Option. Try again!\n");}
       i -= 1;
-    }
-
-          
-   // displayBoard(pos_arr); // call for function for board if move is legal
-      
+    }      
 
     if (gameWon(position, pos_arr) == 1 && player == 'A') {
       printf("You won!\n");
@@ -428,7 +399,6 @@ void playAgainstComputer(char pos_arr[]) {
       printf("Game ends in a draw!");
       exit(EXIT_SUCCESS);
     }
-    //exit(EXIT_SUCCESS);
   }
 }
 
