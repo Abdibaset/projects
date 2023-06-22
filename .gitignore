@@ -1,3 +1,4 @@
 GameHistory.txt
 *.o
 tictactoe
+.*
